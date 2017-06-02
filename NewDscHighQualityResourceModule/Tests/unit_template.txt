@@ -26,11 +26,17 @@ if ( (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCR
 
 Import-Module -Name (Join-Path -Path $script:moduleRoot -ChildPath (Join-Path -Path 'DSCResource.Tests' -ChildPath 'TestHelper.psm1')) -Force
 
-# TODO: Insert the correct <ModuleName> and <ResourceName> for your resource
-$TestEnvironment = Initialize-TestEnvironment `
-    -DSCModuleName '<ModuleName>' `
-    -DSCResourceName '<ResourceName>' `
-    -TestType Unit
+<%
+    if ($PLASTER_PARAM_ResourceType -eq 'Class') {
+        $ResourceName = $PLASTER_PARAM_ResourceFriendlyName
+    } else {
+        $ResourceName = $PLASTER_PARAM_ResourceFullyQualifiedName
+    }
+    "`$TestEnvironment = Initialize-TestEnvironment ``"
+    "    -DSCModuleName '$PLASTER_PARAM_ModuleName' ``"
+    "    -DSCResourceName '$ResourceName' ``"
+    "    -TestType Unit"
+%>
 
 #endregion HEADER
 
@@ -48,8 +54,15 @@ function Invoke-TestCleanup {
 try
 {
     Invoke-TestSetup
-
-    InModuleScope '<ResourceName>' {
+    
+<%
+    if ($PLASTER_PARAM_ResourceType -eq 'Class') {
+        $ResourceName = $PLASTER_PARAM_ResourceFriendlyName
+    } else {
+        $ResourceName = $PLASTER_PARAM_ResourceFullyQualifiedName
+    }
+    "    InModuleScope '$ResourceName' {"
+%>
         # TODO: Optionally create any variables here for use by your tests
 
         # TODO: Complete the Describe blocks below and add more as needed.

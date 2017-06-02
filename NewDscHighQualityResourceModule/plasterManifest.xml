@@ -67,7 +67,7 @@
         <!--Unit test:
 
         -->
-        <file source='Tests\unit_template.txt' destination='${PLASTER_PARAM_ModuleName}\Tests\Unit\${PLASTER_PARAM_ResourceFullyQualifiedName}.Tests.ps1'/>
+        <templateFile source='Tests\unit_template.txt' destination='${PLASTER_PARAM_ModuleName}\Tests\Unit\${PLASTER_PARAM_ResourceFullyQualifiedName}.Tests.ps1'/>
         <!--Example:
 
         -->
