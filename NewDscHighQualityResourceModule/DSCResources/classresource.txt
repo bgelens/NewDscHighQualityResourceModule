@@ -1,0 +1,61 @@
+<%
+    if ($PLASTER_PARAM_Ensure -eq 'Yes') {
+        "enum Ensure"
+        "{"
+        "    Present"
+        "    Absent"
+        "}"
+        ""
+    }
+%>
+[DscResource()]
+class <%=$PLASTER_PARAM_ResourceFriendlyName%>
+{
+<%
+    if ($PLASTER_PARAM_Ensure -eq 'Yes') {
+        "    # Ensure the presence/absene of the resource."
+        "    [DscProperty(Mandatory)]"
+        "    [Ensure] `$Ensure"
+        ""
+    }
+    if ($PLASTER_PARAM_IsSingleInstance -eq 'Yes') {
+        "    # Ensure the resource is SingleInstance."
+        "    [DscProperty(Key)]"
+        "    [ValidateSet('Yes')]"
+        "    [string] `$IsSingleInstance"
+        ""
+    }
+%>
+    [<%=$PLASTER_PARAM_ResourceFriendlyName%>] Get ()
+    {
+        $ReturnObj = [<%=$PLASTER_PARAM_ResourceFriendlyName%>]::new()
+<%
+            if ($PLASTER_PARAM_Ensure -eq 'Yes') {
+                "        `$ReturnObj.Ensure = `$this.Ensure"
+            }
+            if ($PLASTER_PARAM_IsSingleInstance -eq 'Yes') {
+                "        `$ReturnObj.IsSingleInstance = `$this.IsSingleInstance"
+            }
+%>
+        return $ReturnObj
+    }
+
+    [bool] Test ()
+    {
+        [bool] $result = $false
+
+        # Test the status of the target resource instance.  Return either $true or $false.
+
+        return $result
+    }
+
+    [void] Set ()
+    {
+<%
+            if ($PLASTER_PARAM_RebootRequired -eq 'Yes') {
+                "        # Signals LCM that a reboot is required"
+                "        `$global:DSCMachineStatus = `$true"
+            }
+%>
+    }
+}

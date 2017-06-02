@@ -1,0 +1,116 @@
+# The Get-TargetResource function fetches the status of the <%=$PLASTER_PARAM_TargetResourceName%> resource instance specified
+# in the parameters for the target machine.
+function Get-TargetResource {
+    [OutputType([Hashtable])]
+    param (
+<%
+        if ($PLASTER_PARAM_Ensure -eq 'Yes') {
+            "        # Ensure the presence/absene of the resource."
+            "        [Parameter(Mandatory)]"
+            "        [ValidateSet('Present','Absent')]"
+            if ($PLASTER_PARAM_IsSingleInstance -eq 'Yes') {
+                "        [string] `$Ensure,"
+                ""
+            }
+            else {
+                "        [string] `$Ensure"
+            }
+        }
+
+        if ($PLASTER_PARAM_IsSingleInstance -eq 'Yes') {
+            "        # Ensure the resource is SingleInstance."
+            "        [Parameter(Mandatory)]"
+            "        [ValidateSet('Yes')]"
+            "        [string] `$IsSingleInstance"
+        }
+%>
+    )
+
+    # Return a hashtable of name/value pairs representing the target resource instance.
+    @{
+<%
+        if ($PLASTER_PARAM_Ensure -eq 'Yes') {
+            "        Ensure = `$Ensure"
+        }
+        if ($PLASTER_PARAM_IsSingleInstance -eq 'Yes') {
+            "        IsSingleInstance = 'Yes'"
+        }
+%>
+    }
+}
+
+# The Set-TargetResource function is used to create, delete or configure a <%=$PLASTER_PARAM_TargetResourceName%> resource
+# instance for the target machine.
+function Set-TargetResource {
+    [CmdletBinding()]
+    param (
+<%
+        if ($PLASTER_PARAM_Ensure -eq 'Yes') {
+            "        # Ensure the presence/absene of the resource."
+            "        [Parameter(Mandatory)]"
+            "        [ValidateSet('Present','Absent')]"
+            if ($PLASTER_PARAM_IsSingleInstance -eq 'Yes') {
+                "        [string] `$Ensure,"
+                ""
+            }
+            else {
+                "        [string] `$Ensure"
+            }
+        }
+
+        if ($PLASTER_PARAM_IsSingleInstance -eq 'Yes') {
+            "        # Ensure the resource is SingleInstance."
+            "        [Parameter(Mandatory)]"
+            "        [ValidateSet('Yes')]"
+            "        [string] `$IsSingleInstance"
+        }
+%>
+    )
+
+<%
+
+    if ($PLASTER_PARAM_RebootRequired -eq 'Yes') {
+        "    # Signals LCM that a reboot is required"
+        "    `$global:DSCMachineStatus = `$true"
+    }
+%>
+
+}
+
+# The Test-TargetResource function tests the status of the <%=$PLASTER_PARAM_TargetResourceName%> resource instance specified
+# in the parameters for the target machine.
+function Test-TargetResource {
+    [CmdletBinding()]
+    [OutputType([System.Boolean])]
+    param (
+<%
+        if ($PLASTER_PARAM_Ensure -eq 'Yes') {
+            "        # Ensure the presence/absene of the resource."
+            "        [Parameter(Mandatory)]"
+            "        [ValidateSet('Present','Absent')]"
+            if ($PLASTER_PARAM_IsSingleInstance -eq 'Yes') {
+                "        [string] `$Ensure,"
+                ""
+            }
+            else {
+                "        [string] `$Ensure"
+            }
+        }
+
+        if ($PLASTER_PARAM_IsSingleInstance -eq 'Yes') {
+            "        # Ensure the resource is SingleInstance."
+            "        [Parameter(Mandatory)]"
+            "        [ValidateSet('Yes')]"
+            "        [string] `$IsSingleInstance"
+        }
+%>
+    )
+
+    [bool]$result = $false
+
+    # Test the status of the target resource instance.  Return either $true or $false.
+
+    $result
+}
+
+Export-ModuleMember -Function Get-TargetResource, Set-TargetResource, Test-TargetResource

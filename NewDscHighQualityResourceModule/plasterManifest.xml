@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<plasterManifest schemaVersion="1.1"
+    templateType="Project"
+    xmlns="http://www.microsoft.com/schemas/PowerShell/Plaster/v1">
+    <metadata>
+        <name>NewDscHighQualityResourceModule</name>
+        <id>fb3e3de4-5300-4d08-bbbc-a56d8ed5b023</id>
+        <version>0.1.0</version>
+        <title>New Dsc High Quality Resource Module</title>
+        <description>Create a Dsc HQRM Resource Module including a first resource to the root of your workspace</description>
+        <author>Ben Gelens</author>
+        <tags></tags>
+    </metadata>
+    <parameters>
+        <parameter name='ModuleName' type='text' prompt='Enter the name of the module (should end with Dsc)' default='MyHQRMModuleDsc' />
+        <parameter name='Version' type='text' prompt='Enter the version number of the module' default='0.1.0.0'/>
+        <parameter name='ResourceType' type='choice' default='-1' prompt='Select the resource type'>
+            <choice label='&amp;MOF' help="Creates a MOF schema based resource." value="MOF"/>
+            <choice label='&amp;Class' help="Creates a Class based resource." value="Class"/>
+        </parameter>
+        <parameter name='ResourceFriendlyName' type='text' prompt='Enter the initial Dsc Resource Friendly Name'/>
+        <parameter name='ResourceFullyQualifiedName' type='text' prompt='Enter the initial Dsc Resource Fully Qualified Name (will be ignored with Class resource)' default='MSFT_${PLASTER_PARAM_ResourceFriendlyName}'/>
+        <parameter name='Ensure' type='choice' prompt='Add an `"Ensure`" parameter to the resource functions?' default='0'>
+            <choice label='&amp;No' help="Select this option to not add an Ensure parameter." value="No"/>
+            <choice label='&amp;Yes' help="Select this option to add an Ensure parameter." value="Yes"/>
+        </parameter>
+        <parameter name='IsSingleInstance' type='choice' prompt='Single Instance Resource?' default='0'>
+            <choice label='&amp;No' help='Select this option if it is not a Single Instance resource.' value='No'/>
+            <choice label='&amp;Yes' help='Select this option if it is a Single Instance resource.' value='Yes'/>
+        </parameter>
+        <parameter name='RebootRequired' type='choice' prompt='Requires a reboot when Set is done?' default='0'>
+            <choice label='&amp;No' help='Select this option if a reboot is not required.' value='No'/>
+            <choice label='&amp;Yes' help='Select this option if a reboot is required.' value='Yes'/>
+        </parameter>
+    </parameters>
+    <content>
+        <!--Folder structure-->
+        <file source='' destination='${PLASTER_PARAM_ModuleName}'/>
+        <file source='' destination='${PLASTER_PARAM_ModuleName}\DSCResources'/>
+        <file source='' destination='${PLASTER_PARAM_ModuleName}\Tests'/>
+        <file source='' destination='${PLASTER_PARAM_ModuleName}\Tests\Integration'/>
+        <file source='' destination='${PLASTER_PARAM_ModuleName}\Tests\Unit'/>
+        <file source='' destination='${PLASTER_PARAM_ModuleName}\Examples'/>
+        <!--
+            Module Manifest:
+            if class resource, PSVersion = 5.1 and NestedModule + DscResToExport
+            if mof resource, no requirements
+
+            NOTE: IF MOF, DscResourcesToExport will be overwritten somehow
+        -->
+        <newModuleManifest destination='${PLASTER_PARAM_ModuleName}\${PLASTER_PARAM_ModuleName}.psd1' moduleVersion='$PLASTER_PARAM_Version' encoding='UTF8-NoBOM' condition='$PLASTER_PARAM_ResourceType -eq "MOF"'/>
+        <newModuleManifest destination='${PLASTER_PARAM_ModuleName}\${PLASTER_PARAM_ModuleName}.psd1' moduleVersion='$PLASTER_PARAM_Version' encoding='UTF8-NoBOM' condition='$PLASTER_PARAM_ResourceType -eq "Class"' powerShellVersion="5.1" nestedModules="DSCResources\${PLASTER_PARAM_ResourceFriendlyName}\${PLASTER_PARAM_ResourceFriendlyName}.psd1" dscResourcesToExport="${PLASTER_PARAM_ResourceFriendlyName}"/>
+        <!--
+            Initial Resource:
+            if class resource. copy class resource template psm1 to resource folder and replace placeholders. Create manifest
+            if mof resource. copy mof resource template psm1 and schema.mof and replace placeholders
+        -->
+        <newModuleManifest destination='${PLASTER_PARAM_ModuleName}\DSCResources\${PLASTER_PARAM_ResourceFriendlyName}\${PLASTER_PARAM_ResourceFriendlyName}.psd1' moduleVersion='$PLASTER_PARAM_Version' encoding='UTF8-NoBOM' condition='$PLASTER_PARAM_ResourceType -eq "Class"' rootModule='${PLASTER_PARAM_ResourceFriendlyName}.psm1'/>
+        <templateFile source='DSCResources\classresource.txt' destination='${PLASTER_PARAM_ModuleName}\DSCResources\${PLASTER_PARAM_ResourceFriendlyName}\${PLASTER_PARAM_ResourceFriendlyName}.psm1' condition='$PLASTER_PARAM_ResourceType -eq "Class"'/>
+        <templateFile destination="${PLASTER_PARAM_ModuleName}\DSCResources\${PLASTER_PARAM_ResourceFullyQualifiedName}\${PLASTER_PARAM_ResourceFullyQualifiedName}.psm1" source="DSCResources\resource.ps1.txt" condition='$PLASTER_PARAM_ResourceType -eq "MOF"'/>
+        <templateFile destination="${PLASTER_PARAM_ModuleName}\DSCResources\${PLASTER_PARAM_ResourceFullyQualifiedName}\${PLASTER_PARAM_ResourceFullyQualifiedName}.schema.mof" source="DSCResources\resource.schema.mof.txt" condition='$PLASTER_PARAM_ResourceType -eq "MOF"'/>
+        <!--Integration test:
+            Include when users says so?
+        -->
+        <file source='Tests\integration_template.txt' destination='${PLASTER_PARAM_ModuleName}\Tests\Integration\${PLASTER_PARAM_ResourceFullyQualifiedName}.Integration.Tests.ps1'/>
+        <file source='Tests\integration_config_template.txt' destination='${PLASTER_PARAM_ModuleName}\Tests\Integration\${PLASTER_PARAM_ResourceFullyQualifiedName}.Config.ps1'/>
+        <!--Unit test:
+
+        -->
+        <file source='Tests\unit_template.txt' destination='${PLASTER_PARAM_ModuleName}\Tests\Unit\${PLASTER_PARAM_ResourceFullyQualifiedName}.Tests.ps1'/>
+        <!--Example:
+
+        -->
+        <file source='Examples\example.txt' destination='${PLASTER_PARAM_ModuleName}\Examples\${PLASTER_PARAM_ResourceFriendlyName}_Example.ps1'/>
+        <!--Readme:
+
+        -->
+        <!--Appveyor
+
+        -->
+    </content>
+</plasterManifest>

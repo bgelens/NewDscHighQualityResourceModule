@@ -1,0 +1,13 @@
+﻿configuration Example
+{
+    Import-DscResource -ModuleName NetworkingDsc
+
+    node localhost
+    {
+        LMHost Disable
+        {
+            IsSingleInstance = 'Yes'
+            Enable = $false
+        }
+    }
+}
