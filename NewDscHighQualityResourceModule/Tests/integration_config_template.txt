@@ -10,17 +10,30 @@
 #>
 
 
-# TODO: Modify ResourceName (e.g. MSFT_xFirewall_config)
 # Integration Test Config Template Version: 1.0.0
-configuration <ResourceName>_config {
-    # TODO: Modify ModuleName (e.g. xNetworking)
-    Import-DscResource -ModuleName '<ModuleName>'
-    node localhost {
-        # TODO: Modify ResourceFriendlyName (e.g. xFirewall Integration_Test)
-        <ResourceFriendlyName> Integration_Test {
-            # TODO: Fill Configuration Code Here
-        }
+<%
+    if ($PLASTER_PARAM_ResourceType -eq 'Class') {
+        $ResourceName = $PLASTER_PARAM_ResourceFriendlyName
+    } else {
+        $ResourceName = $PLASTER_PARAM_ResourceFullyQualifiedName
     }
-}
+    "configuration ${ResourceName}_config {"
+    "    Import-DscResource -ModuleName '$PLASTER_PARAM_ModuleName'"
+    "    node localhost {"
+    "        $PLASTER_PARAM_ResourceFriendlyName Integration_Test {"
+    "            # TODO: Fill Configuration Code Here"
+
+    if ($PLASTER_PARAM_IsSingleInstance -eq 'Yes') {
+        "            IsSingleInstance = 'Yes'"
+    }
+
+    if ($PLASTER_PARAM_Ensure -eq 'Yes') {
+        "            Ensure = 'Present'"
+    }
+
+    "        }"
+    "    }"
+    "}"
+%>
 
 # TODO: (Optional): Add More Configuration Templates

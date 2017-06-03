@@ -12,9 +12,15 @@
    DSCResource.Tools in Future and therefore should not be altered if possible.
 #>
 
-# TODO: Customize these parameters...
-$script:DSCModuleName      = '<ModuleName>' # Example xNetworking
-$script:DSCResourceName    = '<ResourceName>' # Example MSFT_xFirewall
+<%
+    if ($PLASTER_PARAM_ResourceType -eq 'Class') {
+        $ResourceName = $PLASTER_PARAM_ResourceFriendlyName
+    } else {
+        $ResourceName = $PLASTER_PARAM_ResourceFullyQualifiedName
+    }
+    "`$script:DSCModuleName      = '$PLASTER_PARAM_ModuleName'"
+    "`$script:DSCResourceName    = '$ResourceName'"
+%>
 
 #region HEADER
 # Integration Test Template Version: 1.1.1

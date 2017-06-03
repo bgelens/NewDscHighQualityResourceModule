@@ -61,15 +61,16 @@
         <templateFile destination="${PLASTER_PARAM_ModuleName}\DSCResources\${PLASTER_PARAM_ResourceFullyQualifiedName}\${PLASTER_PARAM_ResourceFullyQualifiedName}.schema.mof" source="DSCResources\resource.schema.mof.txt" condition='$PLASTER_PARAM_ResourceType -eq "MOF"'/>
         <!--Integration test:
             Include when users says so?
+            TODO, with class filename should be friendlyname instead of fqdn
         -->
-        <file source='Tests\integration_template.txt' destination='${PLASTER_PARAM_ModuleName}\Tests\Integration\${PLASTER_PARAM_ResourceFullyQualifiedName}.Integration.Tests.ps1'/>
-        <file source='Tests\integration_config_template.txt' destination='${PLASTER_PARAM_ModuleName}\Tests\Integration\${PLASTER_PARAM_ResourceFullyQualifiedName}.Config.ps1'/>
+        <templateFile source='Tests\integration_template.txt' destination='${PLASTER_PARAM_ModuleName}\Tests\Integration\${PLASTER_PARAM_ResourceFullyQualifiedName}.Integration.Tests.ps1'/>
+        <templateFile source='Tests\integration_config_template.txt' destination='${PLASTER_PARAM_ModuleName}\Tests\Integration\${PLASTER_PARAM_ResourceFullyQualifiedName}.Config.ps1'/>
         <!--Unit test:
-
+            TODO, with class filename should be friendlyname instead of fqdn
         -->
         <templateFile source='Tests\unit_template.txt' destination='${PLASTER_PARAM_ModuleName}\Tests\Unit\${PLASTER_PARAM_ResourceFullyQualifiedName}.Tests.ps1'/>
         <!--Example:
-
+            TODO, with class filename should be friendlyname instead of fqdn
         -->
         <file source='Examples\example.txt' destination='${PLASTER_PARAM_ModuleName}\Examples\${PLASTER_PARAM_ResourceFriendlyName}_Example.ps1'/>
         <!--Readme:
