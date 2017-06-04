@@ -1,13 +1,20 @@
 ﻿configuration Example
 {
-    Import-DscResource -ModuleName NetworkingDsc
+    Import-DscResource -ModuleName <%=$PLASTER_PARAM_ModuleName%>
 
     node localhost
     {
-        LMHost Disable
+        <%=$PLASTER_PARAM_ResourceFriendlyName%> Config
         {
-            IsSingleInstance = 'Yes'
-            Enable = $false
+<%
+            if ($PLASTER_PARAM_IsSingleInstance -eq 'Yes') {
+                "            IsSingleInstance = 'Yes'"
+            }
+
+            if ($PLASTER_PARAM_Ensure -eq 'Yes') {
+                "            Ensure = 'Present'"
+            }
+%>
         }
     }
 }

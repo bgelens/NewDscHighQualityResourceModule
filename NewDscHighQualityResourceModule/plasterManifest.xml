@@ -72,7 +72,7 @@
         <!--Example:
             TODO, with class filename should be friendlyname instead of fqdn
         -->
-        <file source='Examples\example.txt' destination='${PLASTER_PARAM_ModuleName}\Examples\${PLASTER_PARAM_ResourceFriendlyName}_Example.ps1'/>
+        <templateFile source='Examples\example.txt' destination='${PLASTER_PARAM_ModuleName}\Examples\${PLASTER_PARAM_ResourceFriendlyName}_Example.ps1'/>
         <!--Readme:
 
         -->
