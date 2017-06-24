@@ -76,7 +76,16 @@
         <!--Readme:
 
         -->
+        <templateFile source='README.txt' destination='${PLASTER_PARAM_ModuleName}\README.md'/>
         <!--Appveyor
+
+        -->
+        <templateFile source='appveyor.txt' destination='${PLASTER_PARAM_ModuleName}\appveyor.yml'/>
+        <!--License
+
+        -->
+        <templateFile source='LICENSE' destination='${PLASTER_PARAM_ModuleName}\LICENSE'/>
+        <!--GitIgnore
 
         -->
     </content>
