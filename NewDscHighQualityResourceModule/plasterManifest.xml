@@ -88,5 +88,6 @@
         <!--GitIgnore
 
         -->
+        <file source='_gitignore' destination='${PLASTER_PARAM_ModuleName}\.gitignore' />
     </content>
 </plasterManifest>
