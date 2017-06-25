@@ -41,6 +41,7 @@
         <file source='' destination='${PLASTER_PARAM_ModuleName}\Tests\Integration'/>
         <file source='' destination='${PLASTER_PARAM_ModuleName}\Tests\Unit'/>
         <file source='' destination='${PLASTER_PARAM_ModuleName}\Examples'/>
+        <file source='' destination='${PLASTER_PARAM_ModuleName}\.vscode'/>
         <!--
             Module Manifest:
             if class resource, PSVersion = 5.1 and NestedModule + DscResToExport
@@ -97,5 +98,9 @@
 
         -->
         <file source='MetaTestOptIn.txt' destination='${PLASTER_PARAM_ModuleName}\.MetaTestOptIn.json' />
+        <!--vs code settings
+
+        -->
+        <file source='vscodesettings.txt' destination='${PLASTER_PARAM_ModuleName}\.vscode\settings.json' />
     </content>
 </plasterManifest>
