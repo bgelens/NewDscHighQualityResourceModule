@@ -89,5 +89,9 @@
 
         -->
         <file source='_gitignore' destination='${PLASTER_PARAM_ModuleName}\.gitignore' />
+        <!--Codecov
+
+        -->
+        <file source='codecov.txt' destination='${PLASTER_PARAM_ModuleName}\.codecov.yml' />
     </content>
 </plasterManifest>
