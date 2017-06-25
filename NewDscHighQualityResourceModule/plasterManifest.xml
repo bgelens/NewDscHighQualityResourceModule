@@ -93,5 +93,9 @@
 
         -->
         <file source='codecov.txt' destination='${PLASTER_PARAM_ModuleName}\.codecov.yml' />
+        <!--Common tests
+
+        -->
+        <file source='MetaTestOptIn.txt' destination='${PLASTER_PARAM_ModuleName}\.MetaTestOptIn.json' />
     </content>
 </plasterManifest>

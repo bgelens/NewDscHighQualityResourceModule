@@ -11,4 +11,3 @@ class <%=$PLASTER_PARAM_ResourceFullyQualifiedName%> : OMI_BaseResource
     }
 %>
 };
-
