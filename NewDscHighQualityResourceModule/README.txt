@@ -1,37 +1,92 @@
 # <%=$PLASTER_PARAM_ModuleName%>
 
-{AppVeyor build status badge for master branch}
-
 { Description of the module - Please include any requirements for running all resources in this module (e.g. Must run on Windows Server OS, must have Exchange already installed) - Requirements specific to only certain resources in this module may be listed below with the description of those resources. }
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/)
+ or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any
+ additional questions or comments.
 
-## How to Contribute
+## Branches
 
-If you would like to contribute to this repository, please read the DSC Resource Kit [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
+### master
+
+{ appveyor master badge }
+{ codecov master badge }
+
+This is the branch containing the latest release - no contributions should be
+made directly to this branch.
+
+### dev
+
+{ appveyor dev badge }
+{ codecov dev badge }
+
+This is the development branch to which contributions should be proposed by
+contributors as pull requests. This development branch will periodically be
+merged to the master branch, and be released to [PowerShell Gallery](https://www.powershellgallery.com/).
+
+## Contributing
+
+Please check out common DSC Resources [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
 
 ## Resources
 
-* {**Resource1** One line description of resource 1}
-* {**Resource2** One line description of resource 1}
+* [**<%=$PLASTER_PARAM_ResourceFriendlyName%>**](#<%=$PLASTER_PARAM_ResourceFriendlyName.ToLower()%>) One line description of <%=$PLASTER_PARAM_ResourceFriendlyName%>
+* [**Resource2**]() One line description of resource 2}
 * ...
 
-### {Resource1}
+### <%=$PLASTER_PARAM_ResourceFriendlyName%>
 
-{ Detailed description of resource 1 - Please include any requirements for running this resource (e.g. Must run on Windows Server OS, must have Exchange already installed) }
+{ Detailed description of <%=$PLASTER_PARAM_ResourceFriendlyName%> }
 
-* {**Property1**: Description of resource 1 property 1}
-* {**Property2**: Description of resource 1 property 2}
-* ...
+#### Requirements for <%=$PLASTER_PARAM_ResourceFriendlyName%>
 
-### {Resource2}
+* { List the requirements for this resource to work (e.g. Role x installed) }
 
-{ Detailed description of resource 2 - Please include any requirements for running this resource (e.g. Must run on Windows Server OS, must have Exchange already installed) }
+#### Parameters for <%=$PLASTER_PARAM_ResourceFriendlyName%>
+<%
+    if ($PLASTER_PARAM_Ensure -eq 'Yes') {
+        "* **``[String]`` Ensure** _(Write)_: Ensures the resource state. { Present | Absent }."
+    }
+    if ($PLASTER_PARAM_IsSingleInstance -eq 'Yes') {
+        "* **``[String]`` IsSingleInstance** _(Key)_: Specifies the resource is a single instance,"
+        " the value must be 'Yes'. { *Yes* }."
+    }
+%>
+* **`[String]` SomeParam** _(Key)_: Description.
+ The default value is DefaultValue3. { Value1 | Value2 | *DefaultValue3* }.
 
-* {**Property1**: Description of resource 2 property 1}
-* {**Property2**: Description of resource 2 property 2}
-* ...
+#### Read-Only Properties from Get-TargetResource for <%=$PLASTER_PARAM_ResourceFriendlyName%>
+
+{ List any Read-Only Properties here or add the text 'None' if none exist }
+
+#### Examples <%=$PLASTER_PARAM_ResourceFriendlyName%>
+
+* [Example1 description](/Examples/<%=$PLASTER_PARAM_ResourceFriendlyName%>_Example.ps1)
+* [Example2 description]()
+
+### Resource2
+
+{ Detailed description of Resource2 }
+
+#### Requirements for Resource2
+
+* { List the requirements for this resource to work (e.g. Role x installed) }
+
+#### Parameters for Resource2
+
+* **`[String]` SomeParam** _(Key)_: Description.
+ The default value is DefaultValue3. { Value1 | Value2 | *DefaultValue3* }.
+
+#### Read-Only Properties from Get-TargetResource for Resource2
+
+{ List any Read-Only Properties here or add the text 'None' if none exist }
+
+#### Examples Resource2
+
+* [Example1 description](/Examples/<Resource2_Example.ps1)
+* [Example2 description]()
 
 ## Versions
 
@@ -41,9 +96,8 @@ If you would like to contribute to this repository, please read the DSC Resource
 * {Unreleased change 2}
 * ...
 
-### {1.0.0.0}
+### <%=$PLASTER_PARAM_Version%>
 
 * Initial release with the following resources:
-  * {Resource1}
-  * {Resource2}
+  * <%=$PLASTER_PARAM_ResourceFriendlyName%>
   * ...
