@@ -13,16 +13,16 @@ class <%=$PLASTER_PARAM_ResourceFriendlyName%>
 {
 <%
     if ($PLASTER_PARAM_Ensure -eq 'Yes') {
-        "    # Ensure the presence/absene of the resource."
         "    [DscProperty(Mandatory)]"
-        "    [Ensure] `$Ensure"
+        "    [Ensure]"
+        "    `$Ensure"
         ""
     }
     if ($PLASTER_PARAM_IsSingleInstance -eq 'Yes') {
-        "    # Ensure the resource is SingleInstance."
         "    [DscProperty(Key)]"
         "    [ValidateSet('Yes')]"
-        "    [string] `$IsSingleInstance"
+        "    [string]"
+        "    `$IsSingleInstance"
         ""
     }
 %>
